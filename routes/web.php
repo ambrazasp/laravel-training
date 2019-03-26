@@ -32,25 +32,11 @@ Route::get('contact', function () {
     return view('contact', $data);
 });
 
-Route::get('skills', function () {
-    $skills = [
-        [
-            'title' => 'javascript',
-            'percentage' => 80
-        ],
-        [
-            'title' => 'php',
-            'percentage' => 60
-        ],
-        [
-            'title' => 'html',
-            'percentage' => 90
-        ]
-    ];
+Route::get('skills', 'SkillsController@index')->name('skills-page');
 
-    $data = [
-        'skills' => $skills
-    ];
+//Route::resource('posts', 'PostController')
+//->except(['index']);
 
-    return view('skills', $data);
-});
+Route::get('posts', 'PostController@index')->name('posts.index');
+Route::get('posts/create', 'PostController@create')->name('posts.create');
+Route::get('posts/{id}', 'PostController@show')->name('posts.show');

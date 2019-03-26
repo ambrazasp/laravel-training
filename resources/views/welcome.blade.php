@@ -8,12 +8,13 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    <link rel="stylesheet" href="css/app.css">
-    <script src="js/app.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <script src="{{asset('js/app.js')}}" charset="utf-8"></script>
 </head>
 <body>
 <div class="container">
     <h1>Welcome</h1>
+    <a href="{{route('skills-page')}}">Skills</a>
 </div>
 </body>
 </html>
