@@ -14,12 +14,9 @@
 <body>
 
 <div class="container">
-    <h1>App</h1>
-
+    <h1>Storage</h1>
     @yield('content')
 </div>
-
-@include('partials.footer')
 
 </body>
 </html>
