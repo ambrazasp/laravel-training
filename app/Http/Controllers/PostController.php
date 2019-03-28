@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -13,30 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = DB::table('posts')->get();
 
-        $posts = [
-            [
-                'title' => 'Pavadinimas 1',
-                'created_at' => '2019-03-26 16:21',
-                'content' => 'Lorem ipsum alasdflkjasdhbfa fasdf jashdf asdkjf ajsdf'
-            ],
-            [
-                'title' => 'Pavadinimas 2',
-                'created_at' => '2019-03-26 16:22',
-                'content' => 'lkjasdhfjk adhjsfhajs dhjfa bdsf'
-            ],
-            [
-                'title' => 'Pavadinimas 3',
-                'created_at' => '2019-03-26 16:23',
-                'content' => 'ASdkjasdbhj fbajhsdhasj hcvxbxzmn,vnjkxzc vhjkcxzkjv zxcv'
-            ]
-        ];
-
-        $data = [
-            'posts' => $posts
-        ];
-
-        return view('posts.index', $data);
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -57,7 +37,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('posts')->insert([
+            'name' => $request->input('name'),
+            'content' => $request->input('content')
+        ]);
+
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -68,10 +53,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $data = [
-            'id' => $id
-        ];
-        return view('posts.show', $data);
+        $post = DB::table('posts')->where('id', $id)->first();
+        return view('posts.show', compact('post'));
     }
 
     /**

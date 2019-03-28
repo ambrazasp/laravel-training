@@ -40,5 +40,6 @@ Route::get('skills', 'SkillsController@index')->name('skills-page');
 Route::get('posts', 'PostController@index')->name('posts.index');
 Route::get('posts/create', 'PostController@create')->name('posts.create');
 Route::get('posts/{id}', 'PostController@show')->name('posts.show');
+Route::post('posts', 'PostController@store')->name('posts.store');
 
 Route::resource('files', 'FileController');

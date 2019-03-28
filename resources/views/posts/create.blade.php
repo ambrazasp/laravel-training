@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    cia kursim
+    <form action="{{ route('posts.store') }}" method="POST">
+        @csrf
+
+        @input(['name' => 'name', 'label' => 'Pavadinimas'])
+        @textarea(['name' => 'content', 'label' => 'Contentas'])
+        @include('components.form.submit', ['title' => 'Save'])
+
+    </form>
 @endsection
