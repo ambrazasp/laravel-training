@@ -3,29 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FileController extends Controller
 {
-    private $_files = [
-        [
-            'id' => 1,
-            'filename' => 'Failas 1',
-            'created_at' => '2019-03-26 16:21',
-            'size' => 120
-        ],
-        [
-            'id' => 2,
-            'filename' => 'Failas 2',
-            'created_at' => '2019-03-26 16:22',
-            'size' => 240
-        ],
-        [
-            'id' => 3,
-            'filename' => 'Failas 3',
-            'created_at' => '2019-03-26 16:23',
-            'size' => 360
-        ]
-    ];
     /**
      * Display a listing of the resource.
      *
@@ -34,11 +15,9 @@ class FileController extends Controller
     public function index()
     {
 
-        $data = [
-            'files' => $this->_files
-        ];
+        $files = DB::table('files')->get();
 
-        return view('files.index', $data);
+        return view('files.index', ['files' => $files]);
     }
 
     /**
@@ -48,7 +27,7 @@ class FileController extends Controller
      */
     public function create()
     {
-        //
+        return view('files.create');
     }
 
     /**
@@ -59,7 +38,13 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('files')->insert([
+            'filename' => $request->input('filename'),
+            'size' => $request->input('size'),
+            'content' => $request->input('content')
+        ]);
+
+        return redirect(route('files.index'));
     }
 
     /**
@@ -70,11 +55,8 @@ class FileController extends Controller
      */
     public function show($id)
     {
-        $file = array_filter($this->_files, function ($file) use ($id) {
-            return ($file['id'] === (int)$id);
-        });
-
-        return view('files.show', ['file' => array_shift($file)]);
+        $file = DB::table('files')->where('id', $id)->first();
+        return view('files.show', compact('file'));
     }
 
     /**

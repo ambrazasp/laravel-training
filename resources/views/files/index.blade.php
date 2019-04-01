@@ -6,9 +6,9 @@
             <div class="col-4">
                 <div class="card {{ $loop->last ? 'bg-warning' : ''}}">
                     <div class="card-body">
-                        <h1><a href="{{ route('files.show', $file['id']) }}">{{$file['filename']}}</a></h1>
-                        <span>{{$file['created_at']}}</span>
-                        <span>{{$file['size']}}</span>
+                        <h1><a href="{{ route('files.show', $file->id) }}">{{$file->filename}}</a></h1>
+                        <span>{{$file->created_at}}</span>
+                        <span>{{$file->size}}</span>
                     </div>
                 </div>
             </div>
