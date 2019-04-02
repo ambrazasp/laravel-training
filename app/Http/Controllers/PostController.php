@@ -37,12 +37,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|min:5',
+            'content' => 'required'
+        ]);
+
         DB::table('posts')->insert([
             'name' => $request->input('name'),
             'content' => $request->input('content')
         ]);
 
-        return redirect(route('posts.index'));
+        $message = 'Post was created';
+        return redirect()->route('posts.index')->with('message', $message);
     }
 
     /**
@@ -65,7 +71,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = DB::table('posts')->where('id', $id)->first();
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -77,7 +84,18 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:5',
+            'content' => 'required'
+        ]);
+
+        DB::table('posts')->where('id', $id)->update([
+            'name' => $request->input('name'),
+            'content' => $request->input('content')
+        ]);
+
+        $message = 'Post was updated';
+        return redirect()->route('posts.show', [ 'id' => $id ])->with('message', $message);
     }
 
     /**
@@ -88,6 +106,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        DB::table('posts')->delete($id);
+
+        $message = 'Post was deleted';
+        return redirect()->route('posts.index')->with('message', $message);
     }
 }

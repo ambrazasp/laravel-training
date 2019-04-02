@@ -19,6 +19,28 @@
 
     <h1>App</h1>
 
+    @if ( session('message') )
+        @component('components.alert', ['type' => 'success'])
+            {{--@slot('title')--}}
+                {{--hey you--}}
+            {{--@endslot--}}
+            {{ session('message') }}
+        @endcomponent
+    @endif
+
+    {{--@if ( $errors->any() )--}}
+        {{--@component('components.alert', ['type' => 'danger'])--}}
+            {{--@slot('title')--}}
+                {{--Error--}}
+            {{--@endslot--}}
+            {{--<ul>--}}
+                {{--@foreach($errors->all() as $error)--}}
+                    {{--<li>{{ $error }}</li>--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+        {{--@endcomponent--}}
+    {{--@endif--}}
+
     @yield('content')
 </div>
 
