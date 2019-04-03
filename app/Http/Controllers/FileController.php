@@ -38,13 +38,20 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'filename' => 'required|min:5',
+            'size' => 'required',
+            'content' => 'required|min:10'
+        ]);
+
         DB::table('files')->insert([
             'filename' => $request->input('filename'),
             'size' => $request->input('size'),
             'content' => $request->input('content')
         ]);
 
-        return redirect(route('files.index'));
+        $message = 'File was created';
+        return redirect()->route('files.index')->with('message', $message);
     }
 
     /**
@@ -67,7 +74,8 @@ class FileController extends Controller
      */
     public function edit($id)
     {
-        //
+        $file = DB::table('files')->where('id', $id)->first();
+        return view('files.edit', compact('file'));
     }
 
     /**
@@ -79,7 +87,20 @@ class FileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'filename' => 'required|min:5',
+            'size' => 'required',
+            'content' => 'required|min:10'
+        ]);
+
+        DB::table('files')->where('id', $id)->update([
+            'filename' => $request->input('filename'),
+            'size' => $request->input('size'),
+            'content' => $request->input('content')
+        ]);
+
+        $message = 'File was updated';
+        return redirect()->route('files.show', [ 'id' => $id ])->with('message', $message);
     }
 
     /**
@@ -90,6 +111,9 @@ class FileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('files')->delete($id);
+
+        $message = 'File was deleted';
+        return redirect()->route('files.index')->with('message', $message);
     }
 }

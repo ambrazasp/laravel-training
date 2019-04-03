@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome')->name('home');
 
 Route::view('about', 'about');
 Route::view('landing', 'index');
@@ -32,7 +30,7 @@ Route::get('contact', function () {
     return view('contact', $data);
 });
 
-Route::get('skills', 'SkillsController@index')->name('skills-page');
+//Route::get('skills', 'SkillsController@index')->name('skills-page');
 
 //Route::resource('posts', 'PostController')
 //->except(['index']);

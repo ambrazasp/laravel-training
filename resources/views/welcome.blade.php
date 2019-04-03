@@ -12,9 +12,11 @@
     <script src="{{asset('js/app.js')}}" charset="utf-8"></script>
 </head>
 <body>
+@include('partials.navbar')
 <div class="container">
     <h1>Welcome</h1>
-    <a href="{{route('skills-page')}}">Skills</a>
+{{--    <a href="{{route('skills-page')}}">Skills</a>--}}
+{{--    <a href="{{route('skills-page')}}">Skills</a>--}}
 </div>
 </body>
 </html>

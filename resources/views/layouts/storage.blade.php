@@ -13,8 +13,18 @@
 </head>
 <body>
 
+@include('partials.navbar')
+
 <div class="container">
     <h1>Storage</h1>
+
+
+    @if ( session('message') )
+        @component('components.alert', ['type' => 'success'])
+            {{ session('message') }}
+        @endcomponent
+    @endif
+
     @yield('content')
 </div>
 

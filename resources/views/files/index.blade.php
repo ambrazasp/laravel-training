@@ -1,6 +1,7 @@
 @extends('layouts.storage')
 
 @section('content')
+    <a href="{{ route('files.create') }}" class="btn btn-primary mb-3">Create</a>
     <div class="row">
         @forelse($files as $file)
             <div class="col-4">

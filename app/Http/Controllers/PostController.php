@@ -106,7 +106,6 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-
         DB::table('posts')->delete($id);
 
         $message = 'Post was deleted';

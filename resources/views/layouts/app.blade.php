@@ -13,6 +13,8 @@
 </head>
 <body>
 
+@include('partials.navbar')
+
 <div class="container">
     <img src="{{ asset('images/logo-color.png') }}" height="30"/>
     <img src="{{ asset('images/laravel.png') }}" height="30"/>
