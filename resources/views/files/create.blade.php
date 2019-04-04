@@ -7,7 +7,7 @@
         @input(['name' => 'filename', 'label' => 'Name'])
         @input(['name' => 'size', 'label' => 'Size'])
         @textarea(['name' => 'content', 'label' => 'Content'])
-        @include('components.form.submit', ['title' => 'Save'])
+        @submit(['title' => 'Save'])
 
     </form>
 @endsection

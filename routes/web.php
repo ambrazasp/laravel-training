@@ -44,3 +44,8 @@ Route::put('posts/{id}', 'PostController@update')->name('posts.update');
 Route::delete('posts/{id}', 'PostController@destroy')->name('posts.destroy');
 
 Route::resource('files', 'FileController');
+Route::resource('comments', 'CommentController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

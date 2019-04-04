@@ -10,7 +10,7 @@
         @input(['name' => 'filename', 'label' => 'Pavadinimas', 'value' => $file->filename ])
         @input(['name' => 'size', 'label' => 'Pavadinimas', 'value' => $file->size ])
         @textarea(['name' => 'content', 'label' => 'Contentas', 'value' => $file->content ])
-        @include('components.form.submit', ['title' => 'Save'])
+        @submit(['title' => 'Save'])
 
     </form>
 

@@ -1,12 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.blog')
 
 @section('content')
     <form action="{{ route('posts.store') }}" method="POST">
         @csrf
 
-        @input(['name' => 'name', 'label' => 'Pavadinimas'])
-        @textarea(['name' => 'content', 'label' => 'Contentas'])
-        @include('components.form.submit', ['title' => 'Save'])
+        @include('posts.form')
 
+        @submit(['title' => 'Save'])
     </form>
 @endsection

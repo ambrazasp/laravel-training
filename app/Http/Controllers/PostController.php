@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')->get();
+        $posts = Post::all();
 
         return view('posts.index', ['posts' => $posts]);
     }
@@ -26,26 +28,33 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $post = new Post;
+        return view('posts.create', compact('post'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\PostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $request->validate([
-            'name' => 'required|min:5',
-            'content' => 'required'
-        ]);
+//        $request->validate([
+//            'name' => 'required|min:5',
+//            'content' => 'required'
+//        ]);
 
-        DB::table('posts')->insert([
-            'name' => $request->input('name'),
-            'content' => $request->input('content')
-        ]);
+//        DB::table('posts')->insert([
+//            'name' => $request->input('name'),
+//            'content' => $request->input('content')
+//        ]);
+
+        $post = new Post;
+        $post->name = $request->input('name');
+        $post->content = $request->input('content');
+        $post->save();
+
 
         $message = 'Post was created';
         return redirect()->route('posts.index')->with('message', $message);
@@ -59,7 +68,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = DB::table('posts')->where('id', $id)->first();
+        $post = Post::findOrFail($id);
         return view('posts.show', compact('post'));
     }
 
@@ -71,28 +80,33 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = DB::table('posts')->where('id', $id)->first();
+        $post = Post::find($id);
         return view('posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\PostRequest $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required|min:5',
-            'content' => 'required'
-        ]);
+//        $request->validate([
+//            'name' => 'required|min:5',
+//            'content' => 'required'
+//        ]);
+//
+//        DB::table('posts')->where('id', $id)->update([
+//            'name' => $request->input('name'),
+//            'content' => $request->input('content')
+//        ]);
 
-        DB::table('posts')->where('id', $id)->update([
-            'name' => $request->input('name'),
-            'content' => $request->input('content')
-        ]);
+        $post = Post::find($id);
+        $post->name = $request->input('name');
+        $post->content = $request->input('content');
+        $post->save();
 
         $message = 'Post was updated';
         return redirect()->route('posts.show', [ 'id' => $id ])->with('message', $message);
@@ -106,7 +120,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('posts')->delete($id);
+//        DB::table('posts')->delete($id);
+        Post::destroy($id);
 
         $message = 'Post was deleted';
         return redirect()->route('posts.index')->with('message', $message);
