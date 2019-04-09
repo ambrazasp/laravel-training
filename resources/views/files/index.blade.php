@@ -10,6 +10,10 @@
                         <h1><a href="{{ route('files.show', $file->id) }}">{{$file->filename}}</a></h1>
                         <span>{{$file->created_at}}</span>
                         <span>{{$file->size}}</span>
+                        <div>
+                            <a href="{{ route('files.edit', $file->id)  }}" class="btn btn-sm btn-primary">Edit</a>
+                            @delete(['action' => route('files.destroy', $file->id) ])
+                        </div>
                     </div>
                 </div>
             </div>

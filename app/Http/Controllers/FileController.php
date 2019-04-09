@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
+use App\Http\Requests\FileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +17,7 @@ class FileController extends Controller
     public function index()
     {
 
-        $files = DB::table('files')->get();
+        $files = File::all();
 
         return view('files.index', ['files' => $files]);
     }
@@ -27,28 +29,23 @@ class FileController extends Controller
      */
     public function create()
     {
-        return view('files.create');
+        $file = new File;
+        return view('files.create', compact('file'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\FileRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FileRequest $request)
     {
-        $request->validate([
-            'filename' => 'required|min:5',
-            'size' => 'required',
-            'content' => 'required|min:10'
-        ]);
-
-        DB::table('files')->insert([
-            'filename' => $request->input('filename'),
-            'size' => $request->input('size'),
-            'content' => $request->input('content')
-        ]);
+        $file = new File;
+        $file->filename = $request->input('filename');
+        $file->size = $request->input('size');
+        $file->content = $request->input('content');
+        $file->save();
 
         $message = 'File was created';
         return redirect()->route('files.index')->with('message', $message);
@@ -62,7 +59,7 @@ class FileController extends Controller
      */
     public function show($id)
     {
-        $file = DB::table('files')->where('id', $id)->first();
+        $file = File::findOrFail($id);
         return view('files.show', compact('file'));
     }
 
@@ -74,30 +71,24 @@ class FileController extends Controller
      */
     public function edit($id)
     {
-        $file = DB::table('files')->where('id', $id)->first();
+        $file = File::find($id);
         return view('files.edit', compact('file'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\FileRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FileRequest $request, $id)
     {
-        $request->validate([
-            'filename' => 'required|min:5',
-            'size' => 'required',
-            'content' => 'required|min:10'
-        ]);
-
-        DB::table('files')->where('id', $id)->update([
-            'filename' => $request->input('filename'),
-            'size' => $request->input('size'),
-            'content' => $request->input('content')
-        ]);
+        $file = File::find($id);
+        $file->filename = $request->input('filename');
+        $file->size = $request->input('size');
+        $file->content = $request->input('content');
+        $file->save();
 
         $message = 'File was updated';
         return redirect()->route('files.show', [ 'id' => $id ])->with('message', $message);
@@ -111,7 +102,7 @@ class FileController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('files')->delete($id);
+        File::destroy($id);
 
         $message = 'File was deleted';
         return redirect()->route('files.index')->with('message', $message);
