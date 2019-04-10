@@ -44,6 +44,7 @@ class FileController extends Controller
         $file = new File;
         $file->filename = $request->input('filename');
         $file->size = $request->input('size');
+        $file->post_id = $request->input('post_id');
         $file->content = $request->input('content');
         $file->save();
 
@@ -87,6 +88,7 @@ class FileController extends Controller
         $file = File::find($id);
         $file->filename = $request->input('filename');
         $file->size = $request->input('size');
+        $file->post_id = $request->input('post_id');
         $file->content = $request->input('content');
         $file->save();
 

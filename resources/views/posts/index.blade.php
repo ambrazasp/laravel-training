@@ -5,6 +5,10 @@
     <div class="row">
         @each('posts.single-post', $posts, 'post', 'posts.no-posts')
 
-        {{ $posts.links() }}
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {{ $posts->links() }}
+        </div>
     </div>
 @endsection

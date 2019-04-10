@@ -7,9 +7,8 @@
         @csrf
         @method('PUT')
 
-        @input(['name' => 'filename', 'label' => 'Pavadinimas', 'value' => $file->filename ])
-        @input(['name' => 'size', 'label' => 'Pavadinimas', 'value' => $file->size ])
-        @textarea(['name' => 'content', 'label' => 'Contentas', 'value' => $file->content ])
+        @include('files.form')
+
         @submit(['title' => 'Save'])
 
     </form>

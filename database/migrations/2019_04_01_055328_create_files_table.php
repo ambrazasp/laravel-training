@@ -18,6 +18,7 @@ class CreateFilesTable extends Migration
             $table->string('filename')->nullable();
             $table->integer('size')->nullable();
             $table->text('content')->nullable();
+            $table->unsignedBigInteger('post_id');
             $table->timestamps();
         });
     }
