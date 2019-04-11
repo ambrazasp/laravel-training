@@ -52,3 +52,14 @@ Route::resource('comments', 'CommentController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/error/{code}', function($code) {
+    abort($code);
+});
+
+Route::get('/mail-template', function() {
+    $post = \App\Post::orderBy('created_at', 'DESC')->first();
+
+    return new \App\Mail\PostPublish($post);
+});
