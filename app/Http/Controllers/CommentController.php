@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Http\Requests\CommentRequest;
 use App\Post;
 use foo\bar;
 use Illuminate\Http\Request;
@@ -32,10 +33,10 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CommentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
 
         $post = Post::findOrFail($request->input('post'));
@@ -45,12 +46,14 @@ class CommentController extends Controller
 //        $comment->email = $request->input('email');
 //        $comment->content = $request->input('content');
 
-//        $comment = Comment::make($request->validated());
-        $comment = Comment::make($request->all());
+        $comment = Comment::make($request->validated());
+//        $comment = Comment::make($request->all());
 
         $post->comments()->save($comment);
 
-        return redirect()->route('posts.show', $post);
+
+        $message = 'Successfully commented. Good job!';
+        return redirect()->route('posts.show', $post)->with('message', $message);
 
     }
 
@@ -94,8 +97,13 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        $post = $comment->post;
+        Comment::destroy($id);
+
+        $message = 'Comment was deleted';
+        return redirect()->route('posts.show', $post)->with('message', $message);
     }
 }
