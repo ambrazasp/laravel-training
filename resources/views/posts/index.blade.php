@@ -6,6 +6,7 @@
         @each('posts.single-post', $posts, 'post', 'posts.no-posts')
 
     </div>
+
     <div class="row">
         <div class="col-12">
             {{ $posts->links() }}

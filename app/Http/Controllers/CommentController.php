@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Post;
+use foo\bar;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource.s
      *
      * @return \Illuminate\Http\Response
      */
@@ -35,7 +37,21 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $post = Post::findOrFail($request->input('post'));
+
+//        $comment = new Comment();
+//        $comment->author = $request->input('author');
+//        $comment->email = $request->input('email');
+//        $comment->content = $request->input('content');
+
+//        $comment = Comment::make($request->validated());
+        $comment = Comment::make($request->all());
+
+        $post->comments()->save($comment);
+
+        return redirect()->route('posts.show', $post);
+
     }
 
     /**

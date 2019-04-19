@@ -15,11 +15,14 @@
 
     <div>
         <h3>Comments:</h3>
-        @forelse($post->comments()->get() as $comment)
-            <h4>{{ $comment->author }} <span class="small text-muted">({{ $comment->email }})</span></h4>
-            <div>{{ $comment->content }}</div>
-        @empty
-            Nieko nera
-        @endforelse
+
+        <div class="row">
+            <div class="col-4">
+                @include('posts.comments.create', ['post' => $post])
+            </div>
+        </div>
+
+        @include('posts.comments.index', ['comments' => $post->comments] )
+
     </div>
 @endsection
