@@ -3,5 +3,5 @@
     @csrf
     @method('DELETE')
 
-    <button type="submit" class="btn btn-sm btn-danger">{{ $title ?? 'Delete' }}</button>
+    <button type="submit" class="btn btn-link p-0 m-0"><img src="{{ asset('images/icons/bx-trash.svg') }}"/></button>
 </form>

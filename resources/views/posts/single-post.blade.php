@@ -1,14 +1,7 @@
-<div class="col-4">
-    <div class="card">
-        <div class="card-body">
-            <h1><a href="{{ route('posts.show', $post->id)  }}">{{$post->name}}</a> <span class="text-muted small">({{ $post->comments_count }})</span></h1>
-            <span>{{$post->created_at}}</span>
-            <p>{{$post->content}}</p>
-            <a href="{{ route('posts.edit', $post->id)  }}" class="btn btn-sm btn-primary">Edit</a>
-
-            @duplicate(['action' => route('posts.duplicate', $post->id), 'id' => $post->id ])
-
-            @delete(['action' => route('posts.destroy', $post->id) ])
-        </div>
-    </div>
+<h1 class="mt-4 mb-0"><a class="text-dark" href="{{ route('posts.show', $post->id)  }}">{{$post->name}}</a></h1>
+<div class="mb-3">
+    <small class="text-muted">{{ Carbon\Carbon::parse($post->created_at)->diffForHumans()}}</small>
 </div>
+<p class="my-3">{{$post->content}}</p>
+
+@include('components.edit', ['type' => 'posts', 'id' => $post->id])

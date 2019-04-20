@@ -10655,8 +10655,42 @@ a.text-dark:focus {
   }
 }
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+h1 a,
+h2 a,
+h3 a,
+h4 a {
+  text-decoration: none !important;
+  opacity: 0.9;
+}
+
+h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover {
+  opacity: 1;
+}
+
+.edit {
+  position: absolute;
+  top: 0px;
+  padding: 30px;
+  right: -30px;
+}
+
+.edit:hover .edit-menu {
+  opacity: 1;
+}
+
+.edit .edit-menu {
+  opacity: 0;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #fff;
+  padding: 10px;
+}
+
+.edit .edit-menu > * {
+  margin-top: 5px;
 }
 

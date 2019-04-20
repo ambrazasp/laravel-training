@@ -1,5 +1,7 @@
 <div class="form-group">
-    <label for="{{ $name }}">{{ $label }}</label>
+    @if (!empty($label))
+        <label for="{{ $name }}">{{ $label }}</label>
+    @endif
     <textarea name="{{ $name }}" class="form-control" id="{{ $name }}">{{ old($name, $value ?? '') }}</textarea>
 
 

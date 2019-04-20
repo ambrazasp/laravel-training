@@ -1,28 +1,34 @@
 @extends('layouts.blog')
 
 @section('content')
-    @include('posts.single-post', ['post' => $post])
+    <div class="row">
+        <div class="col-8 offset-2">
 
-    @if ($post->files()->count() > 0)
-    <div>
-        <h3>Files:</h3>
-        @foreach($post->files()->get() as $file)
-            <h4>{{ $file->filename }} <span class="small text-muted">({{ $file->size }} KB)</span></h4>
-            <p>{{ $file->content }}</p>
-        @endforeach
-    </div>
-    @endif
+            @include('posts.single-post', ['post' => $post])
 
-    <div>
-        <h3>Comments:</h3>
+            @if ($post->files()->count() > 0)
 
-        <div class="row">
-            <div class="col-4">
-                @include('posts.comments.create', ['post' => $post])
+            <div class="row mt-4">
+                <div class="col-12">
+
+                @foreach($post->files()->get() as $file)
+                    <img src="{{ asset('images/icons/bx-file.svg') }}"/>
+                    <small>{{ $file->filename }} <span class="text-muted">({{ $file->size }} KB)</span></small>
+                @endforeach
+
+                </div>
             </div>
+            @endif
+
+            <hr class="my-5">
+
+            <div class="row">
+                <div class="col-12">
+                    @include('posts.comments.create', ['post' => $post])
+                </div>
+            </div>
+
+            @include('posts.comments.index', ['comments' => $post->comments] )
         </div>
-
-        @include('posts.comments.index', ['comments' => $post->comments] )
-
     </div>
 @endsection
