@@ -5,6 +5,31 @@
             <div class="mb-3">
                 <small class="text-muted">{{ Carbon\Carbon::parse($post->created_at)->diffForHumans()}}</small>
             </div>
+
+            @if ($post->trashed())
+            <div class="mb-3">
+                <small class="text-danger">Deleted: {{ Carbon\Carbon::parse($post->deleted_at)->diffForHumans()}}</small>
+
+                <form action="{{ route('posts.restore') }}" method="POST">
+                    @csrf
+
+                    <input type="hidden" name="id" value="{{ $post->id }}">
+
+                    <button type="submit" class="btn btn-sm btn-primary">Restore</button>
+                </form>
+            </div>
+            @endif
+
+            @if ($post->categories)
+            <div class="mb-3">
+                <small class="text-primary">
+                @foreach($post->categories as $category)
+                    {{ $category->name }},
+                @endforeach
+                </small>
+            </div>
+            @endif
+
             <p>{{$post->content}}</p>
             {{--<a href="{{ route('posts.edit', $post->id)  }}" class="btn btn-link p-0 m-0"><img src="{{ asset('images/icons/bx-edit.svg') }}"/></a>--}}
 

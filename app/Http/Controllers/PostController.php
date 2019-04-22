@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class PostController extends Controller
     public function create()
     {
         $post = new Post;
-        return view('posts.create', compact('post'));
+        $categories = Category::all();
+        return view('posts.create', compact('post', 'categories'));
     }
 
     /**
@@ -55,6 +57,7 @@ class PostController extends Controller
         $post->content = $request->input('content');
         $post->save();
 
+        $post->categories()->attach($request->input('categories'));
 
         $message = 'Post was created';
         return redirect()->route('posts.index')->with('message', $message);
