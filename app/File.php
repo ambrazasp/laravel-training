@@ -13,7 +13,7 @@ class File extends Model
         return $this->belongsTo(Post::class);
     }
 
-    public function scopeWhereExt($query, $ext) {
+    public function scopeExtIs($query, $ext) {
         return $query->where('filename', 'LIKE', '%' . $ext);
     }
 

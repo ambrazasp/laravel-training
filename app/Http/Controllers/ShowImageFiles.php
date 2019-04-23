@@ -16,7 +16,7 @@ class ShowImageFiles extends Controller
     public function __invoke(Request $request)
     {
 
-        $files = File::whereExt('.jpg')->get();
+        $files = File::extIs('.jpg')->get();
 
         return view('files.index', ['files' => $files]);
     }
