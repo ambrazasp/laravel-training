@@ -51,6 +51,10 @@ Route::get('recent-posts', 'ShowRecentPosts')->name('posts.recent');
 Route::get('deleted-posts', 'ShowDeletedPosts')->name('posts.deleted');
 
 Route::resource('files', 'FileController');
+Route::get('image-files', 'ShowImageFiles')->name('files.images');
+Route::get('large-files', 'ShowLargeFiles')->name('files.large');
+
+Route::resource('categories', 'CategoryController');
 
 Route::resource('comments', 'CommentController');
 

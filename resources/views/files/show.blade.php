@@ -1,12 +1,20 @@
 @extends('layouts.storage')
 
 @section('content')
-    <h2>{{$file->filename}}</h2>
-    <span>Created at: {{$file->created_at}}</span>
-    <div>Size: {{$file->size}}</div>
-    <div>Content: {{$file->content}}</div>
-    <a href="{{ route('files.edit', $file->id)  }}" class="btn btn-sm btn-primary">Edit</a>
-    @delete(['action' => route('files.destroy', $file->id) ])
 
-    <a href="{{ route('files.index') }}">Back</a>
+    <div class="row">
+        <div class="col-8 offset-2">
+
+            <h2>{{$file->filename}}</h2>
+            <span>Created {{ Carbon\Carbon::parse($file->created_at)->diffForHumans()}}</span>
+            <div>Size: {{$file->size}}</div>
+            <p>{{$file->content}}</p>
+
+            @include('components.edit', ['type' => 'files', 'id' => $file->id])
+
+            <a href="{{ route('files.index') }}">Back</a>
+
+        </div>
+    </div>
+
 @endsection

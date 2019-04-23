@@ -5,15 +5,17 @@
     <div class="row">
         @forelse($files as $file)
             <div class="col-4">
-                <div class="card {{ $loop->last ? 'bg-warning' : ''}}">
+                <div class="card {{ $loop->last ? 'bg-warning' : ''}} mb-5">
                     <div class="card-body">
-                        <h1><a href="{{ route('files.show', $file->id) }}">{{$file->filename}}</a></h1>
-                        <span>{{$file->created_at}}</span>
-                        <span>{{$file->size}}</span>
-                        <div>
-                            <a href="{{ route('files.edit', $file->id)  }}" class="btn btn-sm btn-primary">Edit</a>
-                            @delete(['action' => route('files.destroy', $file->id) ])
+                        <h1 class="mt-4 mb-0"><a class="text-dark" href="{{ route('files.show', $file->id) }}">{{$file->filename}}</a></h1>
+                        <div class="mb-3">
+                            <small class="text-muted">{{ Carbon\Carbon::parse($file->created_at)->diffForHumans()}}</small>
                         </div>
+                        <div class="mb-3">
+                            <small class="text-primary">{{$file->size}} KB</small>
+                        </div>
+
+                        @include('components.edit', ['type' => 'files', 'id' => $file->id])
                     </div>
                 </div>
             </div>

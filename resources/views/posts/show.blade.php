@@ -6,18 +6,17 @@
 
             @include('posts.single-post', ['post' => $post])
 
-            @if ($post->files()->count() > 0)
+            @if ($post->files->count() > 0)
+                <div class="row mt-4">
+                    <div class="col-12">
 
-            <div class="row mt-4">
-                <div class="col-12">
+                    @foreach($post->files as $file)
+                        <img src="{{ asset('images/icons/bx-file.svg') }}"/>
+                        <small>{{ $file->filename }} <span class="text-muted">({{ $file->size }} KB)</span></small>
+                    @endforeach
 
-                @foreach($post->files()->get() as $file)
-                    <img src="{{ asset('images/icons/bx-file.svg') }}"/>
-                    <small>{{ $file->filename }} <span class="text-muted">({{ $file->size }} KB)</span></small>
-                @endforeach
-
+                    </div>
                 </div>
-            </div>
             @endif
 
             <hr class="my-5">
