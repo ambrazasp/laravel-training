@@ -10,13 +10,13 @@
 
     <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="{{ asset('js/app.js') }}" charset="utf-8"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
 
 @include('partials.navbar')
 
-<div class="container">
+<div id="app" class="container">
     <img src="{{ asset('images/logo-color.png') }}" height="30"/>
     <img src="{{ asset('images/laravel.png') }}" height="30"/>
 

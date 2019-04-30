@@ -14,7 +14,9 @@
 @endif
 
 <p class="my-3">{{$post->content}}</p>
+<delete-button-component post-id="{{ $post->id }}"></delete-button-component>
 
-@can('update', $post)
+{{--@can('update', $post)--}}
     @include('components.edit', ['type' => 'posts', 'id' => $post->id])
-@endcan
+{{--@endcan--}}
+

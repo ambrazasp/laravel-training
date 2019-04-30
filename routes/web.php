@@ -81,3 +81,5 @@ Route::get('/mail-template', function() {
 
     return new \App\Mail\PostPublish($post);
 });
+
+Route::view('numbers', 'numbers');

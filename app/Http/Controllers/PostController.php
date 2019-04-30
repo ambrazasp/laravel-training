@@ -13,7 +13,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Post::class, 'post');
+//        $this->authorizeResource(Post::class, 'post');
     }
 
     /**
@@ -141,6 +141,11 @@ class PostController extends Controller
         $post->delete();
 
         $message = 'Post was deleted';
-        return redirect()->route('posts.index')->with('message', $message);
+        request()->session()->flash('message', $message);
+
+        if (request()->expectsJson()) {
+            return response()->json([], 204);
+        }
+        return redirect()->route('posts.index');
     }
 }
