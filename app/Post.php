@@ -30,4 +30,8 @@ class Post extends Model
     public function scopeCreatedAfter($query, $dateTime) {
         return $query->where('created_at', '>', $dateTime);
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

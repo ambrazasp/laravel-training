@@ -35,20 +35,30 @@ Route::get('contact', function () {
 //Route::resource('posts', 'PostController')
 //->except(['index']);
 
+
+Route::middleware('auth')->group(function() {
+    /* Posts */
+//    Route::get('posts', 'PostController@index')->name('posts.index')->middleware('auth');
+    Route::get('posts/create', 'PostController@create')->name('posts.create');
+//    Route::get('posts/{post}', 'PostController@show')->name('posts.show');
+    Route::post('posts', 'PostController@store')->name('posts.store');
+    Route::get('posts/{post}/edit', 'PostController@edit')->name('posts.edit');
+    Route::put('posts/{post}', 'PostController@update')->name('posts.update');
+    Route::delete('posts/{post}', 'PostController@destroy')->name('posts.destroy');
+
+    Route::post('duplicate-post', 'DuplicatePost')->name('posts.duplicate');
+    Route::post('restore-post', 'RestorePost')->name('posts.restore');
+
+    Route::get('top-posts', 'ShowTopPosts')->name('posts.top');
+    Route::get('recent-posts', 'ShowRecentPosts')->name('posts.recent');
+    Route::get('deleted-posts', 'ShowDeletedPosts')->name('posts.deleted');
+    /* /Posts */
+
+    Route::resource('comments', 'CommentController');
+});
+
 Route::get('posts', 'PostController@index')->name('posts.index');
-Route::get('posts/create', 'PostController@create')->name('posts.create');
-Route::get('posts/{id}', 'PostController@show')->name('posts.show');
-Route::post('posts', 'PostController@store')->name('posts.store');
-Route::get('posts/{id}/edit', 'PostController@edit')->name('posts.edit');
-Route::put('posts/{id}', 'PostController@update')->name('posts.update');
-Route::delete('posts/{id}', 'PostController@destroy')->name('posts.destroy');
-
-Route::post('duplicate-post', 'DuplicatePost')->name('posts.duplicate');
-Route::post('restore-post', 'RestorePost')->name('posts.restore');
-
-Route::get('top-posts', 'ShowTopPosts')->name('posts.top');
-Route::get('recent-posts', 'ShowRecentPosts')->name('posts.recent');
-Route::get('deleted-posts', 'ShowDeletedPosts')->name('posts.deleted');
+Route::get('posts/{post}', 'PostController@show')->name('posts.show');
 
 Route::resource('files', 'FileController');
 Route::get('image-files', 'ShowImageFiles')->name('files.images');
@@ -56,7 +66,6 @@ Route::get('large-files', 'ShowLargeFiles')->name('files.large');
 
 Route::resource('categories', 'CategoryController');
 
-Route::resource('comments', 'CommentController');
 
 Auth::routes();
 

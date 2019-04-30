@@ -20,6 +20,14 @@
             </div>
             @endif
 
+            @if ($post->user)
+                <div class="mb-3">
+                    <small class="text-info">
+                            {{ $post->user->name }}
+                    </small>
+                </div>
+            @endif
+
             @if ($post->categories)
             <div class="mb-3">
                 <small class="text-primary">

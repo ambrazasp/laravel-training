@@ -6,10 +6,16 @@ use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +61,8 @@ class PostController extends Controller
         $post = new Post;
         $post->name = $request->input('name');
         $post->content = $request->input('content');
-        $post->save();
+//        $post->save();
+        Auth::user()->posts()->save($post);
 
         $post->categories()->attach($request->input('categories'));
 
@@ -66,12 +73,12 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::findOrFail($id);
+//        $post = Post::findOrFail($id);
         return view('posts.show', compact('post'));
     }
 
@@ -81,9 +88,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = Post::find($id);
+//        $post = Post::find($id);
+//        $this->authorize('update', $post);
         return view('posts.edit', compact('post'));
     }
 
@@ -91,10 +99,10 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\PostRequest $request
-     * @param  int  $id
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, $id)
+    public function update(PostRequest $request, Post $post)
     {
 //        $request->validate([
 //            'name' => 'required|min:5',
@@ -106,25 +114,31 @@ class PostController extends Controller
 //            'content' => $request->input('content')
 //        ]);
 
-        $post = Post::find($id);
+//        $post = Post::find($id);
+//        $this->authorize('update', $post);
         $post->name = $request->input('name');
         $post->content = $request->input('content');
         $post->save();
 
         $message = 'Post was updated';
-        return redirect()->route('posts.show', [ 'id' => $id ])->with('message', $message);
+        return redirect()->route('posts.show', compact('post'))->with('message', $message);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
 //        DB::table('posts')->delete($id);
-        Post::destroy($id);
+//        $post = Post::find($id);
+
+//        $this->authorize('delete', $post);
+
+//        Post::destroy($post->id);
+        $post->delete();
 
         $message = 'Post was deleted';
         return redirect()->route('posts.index')->with('message', $message);

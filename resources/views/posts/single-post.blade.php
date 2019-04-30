@@ -15,4 +15,6 @@
 
 <p class="my-3">{{$post->content}}</p>
 
-@include('components.edit', ['type' => 'posts', 'id' => $post->id])
+@can('update', $post)
+    @include('components.edit', ['type' => 'posts', 'id' => $post->id])
+@endcan
